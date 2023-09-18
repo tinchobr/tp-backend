@@ -1,22 +1,23 @@
 const jwt = require("jsonwebtoken");
-const User = require("../../users/models/users");
+const User = require("../../user/models/user");
 const crypto = require("crypto");
 require('dotenv').config();
 const JWT_SECRET = process.env.JWT_SECRET;
 
-const login = (req, res) => {
+const login = async (req, res) => {
   const { username, pin } = req.body;
-
-  User.findByUsername(username)
+  const prueba = await User.findOne({username: username}).populate('characters')
+  console.log(prueba.characters)
+  User.findOne({ username: username })
     .then((user) => {
       if (!user) {
         console.log("not found")
         return res.status(400).json({message:"Incorrect Login"});
       }
-
+      
       let token = jwt.sign(
         {
-          username,
+          id: user._id,
         },
         JWT_SECRET,
         { expiresIn: "1h" }
@@ -28,8 +29,8 @@ const login = (req, res) => {
         console.log("not match")
         return res.status(400).json({message:"Incorrect Login"});
       }
-
-      return res.status(200).json(token);
+      console.log(user)
+      return res.status(200).json({token});
     })
     .catch((err) => {
       console.log(err)
