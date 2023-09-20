@@ -1,6 +1,6 @@
 const router = require("express").Router();
-const CharacterController = require("./controllers/CharacterController");
-const TokenValidationMiddleware = require("../common/middlewares/TokenValidationMiddleware");
+const CharacterController = require("../controllers/CharacterController");
+const TokenValidationMiddleware = require("../middleware/TokenValidationMiddleware");
 
 router.put(
   "/:id",

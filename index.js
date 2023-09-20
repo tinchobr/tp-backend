@@ -1,6 +1,5 @@
 const express = require("express")
-const AuthorizationRoutes = require("./authorization/routes")
-const CharacterRoutes = require("./character/routes")
+const apiRoutes = require("./routes/index")
 const app = express()
 const http = require("http").createServer(app)
 const cors = require("cors")
@@ -17,8 +16,7 @@ mongoose.connect(URI, {dbName:DB_NAME}).then(()=>{
 
 app.use(cors())
 app.use(express.json())
-app.use("/", AuthorizationRoutes)
-app.use("/character", CharacterRoutes)
+app.use("/", apiRoutes)
 
 http.listen(PORT, ()=>{
   console.log(`listening to ${PORT}`)

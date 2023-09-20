@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-require("../../character/models/character")
+require("./character")
 
 const userSchema = new Schema({
   firstName: { type: String, required: true },

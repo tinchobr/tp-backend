@@ -1,4 +1,4 @@
-const User = require("../../user/models/user");
+const User = require("../models/user");
 const Character = require("../models/character");
 
 const updateUserCharacters = (req, res) => {
