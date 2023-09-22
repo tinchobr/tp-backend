@@ -1,13 +1,29 @@
 const mongoose = require("mongoose")
 const Schema = mongoose.Schema
+require("./characterization")
 
 const characterSchema = new Schema({
   name: { type: String, required: true },
-  face: { type: String, required: true },
-  top: { type: String, required: true },
-  bottom: { type: String, required: true },
-  shoes: { type: String, required: true },
-  lastUpdate: { type: Date, default: Date.now }
+  face: {
+    type: Schema.Types.ObjectId,
+    ref: "characterization",
+  },
+  top: {
+    type: Schema.Types.ObjectId,
+    ref: "characterization",
+  },
+  bottom: {
+    type: Schema.Types.ObjectId,
+    ref: "characterization",
+  },
+  shoes: {
+    type: Schema.Types.ObjectId,
+    ref: "characterization",
+  },
+}, { timestamps: true } ).set('toJSON',{
+  transform: (document, object) => {
+      delete object.__v;
+  }
 })
 
 const Character = mongoose.model("character", characterSchema)
