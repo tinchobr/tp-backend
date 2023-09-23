@@ -304,3 +304,14 @@ Este proyecto implementa un backend para un juego infantil que permite a los ni�
       "createdAt": "2023-09-23T04:06:56.905Z",
       "updatedAt": "2023-09-23T04:41:16.597Z"
     }
+
+## Dependencias
+
+* ajv: Validación de JSON.
+* cors: Permite a una aplicación web aceptar solicitudes de origen cruzado.
+* crypto: Proporciona funciones criptográficas.
+* dotenv: Permite leer variables de entorno desde un archivo .env.
+* express: Se utiliza para crear el servidor web.
+* jsonwebtoken: Genera y valida tokens JWT
+* mongoose: Es una capa de abstracción para MongoDB.
+* mongodb: Base de datos NoSQL
