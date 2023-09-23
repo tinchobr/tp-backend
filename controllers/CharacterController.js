@@ -1,19 +1,17 @@
 const User = require("../models/user");
 const Character = require("../models/character");
 
-const updateUserCharacters = (req, res) => {
+const updateUserCharacters = async (req, res) => {
   const character = req.body;
-  character.lastUpdate = Date.now();
 
-  Character.findByIdAndUpdate(req.params.id, character)
-    .then((updated) => {
-      console.log("updated character", updated);
-      return res.status(200).send();
-    })
-    .catch((err) => {
-      console.error("Error updating character", err);
-      return res.status(400).send();
+  try {
+    let result = await Character.findByIdAndUpdate(req.params.id, character, {
+      returnDocument: "after",
     });
+    return res.status(200).send(result);
+  } catch (err) {
+    return res.status(500).send({ message: err.message });
+  }
 };
 
 const createUserCharacter = (req, res) => {
@@ -27,17 +25,14 @@ const createUserCharacter = (req, res) => {
         { new: true, useFindAndModify: false }
       )
         .then((obj) => {
-          console.log("created new character", obj);
-          return res.status(201).send();
+          return res.status(201).send(newCharacter);
         })
         .catch((err) => {
-          console.log("update user error", err);
-          return res.status(400).send();
+          return res.status(500).send({ message: err.message });
         });
     })
     .catch((err) => {
-      console.log("create character error", err);
-      return res.status(400).send();
+      return res.status(500).send({ message: err.message });
     });
 };
 
@@ -47,11 +42,10 @@ const getLastCreated = (req, res) => {
     .sort({ updatedAt: -1 })
     .limit(5)
     .then((characters) => {
-      return res.status(200).send({ characters });
+      return res.status(200).send(characters);
     })
     .catch((err) => {
-      console.log("getAll", err);
-      return res.status(400).send({ message: "find characters error" });
+      return res.status(500).send({ message: err.message });
     });
 };
 
@@ -59,11 +53,16 @@ const getById = (req, res) => {
   Character.findById(req.params.id)
     .populate(["face", "top", "bottom", "shoes"])
     .then((character) => {
-      return res.status(200).send({ character });
+      return res.status(200).send(character);
     })
     .catch((err) => {
-      return res.status(500).send({ message: "find character error" });
+      return res.status(500).send({ message: err.message });
     });
 };
 
-module.exports = { updateUserCharacters, createUserCharacter, getLastCreated, getById };
+module.exports = {
+  updateUserCharacters,
+  createUserCharacter,
+  getLastCreated,
+  getById,
+};

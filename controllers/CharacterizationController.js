@@ -5,7 +5,7 @@ const getAll = (req, res) => {
     .skip(req.query.skip)
     .limit(req.query.limit)
     .then((characterizations) => {
-      return res.status(200).send({ characterizations });
+      return res.status(200).send(characterizations);
     })
     .catch((err) => {
       return res
