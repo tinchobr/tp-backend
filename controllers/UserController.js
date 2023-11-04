@@ -1,7 +1,7 @@
 const User = require("../models/user");
 
 const getUserCharacters = (req, res) => {
-  User.findById(req.params.id)
+  User.findById(req.user.id)
     .populate({
       path: "characters",
       populate: [

@@ -3,7 +3,7 @@ const UserController = require("../controllers/UserController");
 const TokenValidationMiddleware = require("../middleware/TokenValidationMiddleware");
 
 router.get(
-  "/:id/characters",
+  "/characters",
   [TokenValidationMiddleware.verifyToken],
   UserController.getUserCharacters
 );
