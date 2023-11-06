@@ -6,7 +6,7 @@ const JWT_SECRET = process.env.JWT_SECRET;
 
 const login = async (req, res) => {
   const { username, pin } = req.body;
-  
+
   User.findOne({ username: username })
     .then((user) => {
       if (!user) {
@@ -26,7 +26,9 @@ const login = async (req, res) => {
       if (user.pin !== encryptedPassword) {
         return res.status(400).json({ message: "Incorrect Login" });
       }
-      return res.status(200).json({ token });
+      return res
+        .status(200)
+        .json({ token, firstName: user.firstName, lastName: user.lastName });
     })
     .catch((err) => {
       return res.status(500).json({ message: err.message });
